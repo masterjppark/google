@@ -7,7 +7,6 @@ window.onload = () => {
     "bot-message"
   );
 
-  // FAQ 데이터 불러오기
   fetch('data/faq.json')
     .then(res => res.json())
     .then(data => faqData = data)
@@ -27,12 +26,19 @@ function sendMessage() {
   input.value = "";
 }
 
+function handleEnter(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    sendMessage();
+  }
+}
+
 function addMessage(text, className) {
   const chat = document.getElementById("chat-window");
-  const div = document.createElement("div");
-  div.className = className;
-  div.innerText = text;
-  chat.appendChild(div);
+  const message = document.createElement("div");
+  message.className = className;
+  message.innerText = text;
+  chat.appendChild(message);
   chat.scrollTop = chat.scrollHeight;
 }
 
