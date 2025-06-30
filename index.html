@@ -1,30 +1,47 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Google Edu 챗봇</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Edu 챗봇</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="chatbot-wrapper">
     <div class="chat-container">
-      <div class="header">
-        <img src="avatar/chatbot_avatar.png" class="bot-icon" />
-        <span class="title">Google Edu 챗봇</span>
-      </div>
-      <div class="chat-window" id="chat-window"></div>
-      <div class="input-area">
-        <input
-          type="text"
-          id="user-input"
-          placeholder="질문을 입력하세요..."
-          onkeydown="handleEnter(event)"
-        />
-        <button onclick="sendMessage()">전송</button>
-      </div>
+        <div class="chat-header">
+            <div class="avatar">
+                <img src="chatbot_avatar.png" alt="챗봇" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="avatar-fallback">🤖</div>
+            </div>
+            <div class="chat-title">Google Edu 챗봇</div>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="welcome-message">
+                안녕하세요! Google for Education에 대해 궁금한 점이 있으시면 무엇이든 질문해주세요.
+                <div class="quick-questions" id="quickQuestions">
+                    <!-- 빠른 질문들이 여기에 동적으로 로드됩니다 -->
+                </div>
+            </div>
+            
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="message-avatar">🤖</div>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chat-input">
+            <div class="input-container">
+                <input type="text" id="messageInput" class="message-input" placeholder="질문을 입력하세요..." />
+                <button id="sendButton" class="send-button">전송</button>
+            </div>
+        </div>
     </div>
-  </div>
-  <script src="script.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>
