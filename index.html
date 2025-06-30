@@ -7,17 +7,24 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="chat-container">
-    <div class="header">
-      <img src="avatar/chatbot_avatar.png" class="bot-icon" />
-      <span class="title">Google Edu 챗봇</span>
-    </div>
-    <div class="chat-window" id="chat-window">
-      <!-- 초기 메시지는 JS에서 삽입됩니다 -->
-    </div>
-    <div class="input-area">
-      <input type="text" id="user-input" placeholder="질문을 입력하세요..." />
-      <button onclick="sendMessage()">전송</button>
+  <div class="chatbot-wrapper">
+    <div class="chat-container">
+      <div class="header">
+        <img src="avatar/chatbot_avatar.png" class="bot-icon" />
+        <span class="title">Google Edu 챗봇</span>
+      </div>
+      <div class="chat-window" id="chat-window">
+        <!-- JS에서 초기 메시지 출력 -->
+      </div>
+      <div class="input-area">
+        <input
+          type="text"
+          id="user-input"
+          placeholder="질문을 입력하세요..."
+          onkeydown="handleEnter(event)"
+        />
+        <button onclick="sendMessage()">전송</button>
+      </div>
     </div>
   </div>
   <script src="script.js"></script>
