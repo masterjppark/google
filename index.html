@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google for Education 챗봇</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Google Edu 챗봇</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="chatbot-container">
-        <div class="chatbot-header">
-            <img src="chatbot_avatar.png" alt="챗봇 아바타" class="chatbot-avatar">
-            <h1>Google Edu 챗봇</h1>
-        </div>
-        <div class="chatbot-messages" id="chatbot-messages">
-            <div class="message bot-message">
-                안녕하세요! Google for Education에 대해 궁금한 점이 있으시면 무엇이든 질문해주세요.
-            </div>
-        </div>
-        <div class="chatbot-input">
-            <input type="text" id="user-input" placeholder="질문을 입력하세요...">
-            <button id="send-button">전송</button>
-        </div>
+  <div class="chat-container">
+    <div class="header">
+      <img src="avatar/chatbot_avatar.png" class="bot-icon" />
+      <span class="title">Google Edu 챗봇</span>
     </div>
-
-    <script src="script.js"></script>
+    <div class="chat-window" id="chat-window">
+      <div class="bot-message">안녕하세요! Google 공인교육자 제도에 대해 궁금한 점을 물어보세요.</div>
+    </div>
+    <div class="input-area">
+      <input type="text" id="user-input" placeholder="질문을 입력하세요..." />
+      <button onclick="sendMessage()">전송</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
