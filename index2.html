@@ -1,1 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Edu 챗봇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #4285f4 0%, #6366f1 100%);
+            padding: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .chat-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f8fafc;
+        }
+
+        .welcome-message {
+            background: #e5e7eb;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-content {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.4;
+        }
+
+        .message.bot .message-content {
+            background: #4285f4;
+            color: white;
+            border-bottom-left-radius: 6px;
+        }
+
+        .message.user .message-content {
+            background: #e5e7eb;
+            color: #374151;
+            border-bottom-right-radius: 6px;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #4285f4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .user .message-avatar {
+            background: #6b7280;
+        }
+
+        .chat-input {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 25px;
+            outline: none;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .message-input:focus {
+            border-color: #4285f4;
+        }
+
+        .send-button {
+            padding: 12px 20px;
+            background: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .send-button:hover {
+            background: #3367d6;
+        }
+
+        .send-button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #9ca3af;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .quick-questions {
+            margin-top: 15px;
+        }
+
+        .quick-question {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .quick-question:hover {
+            background: #4285f4;
+            color: white;
+            border-color: #4285f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="avatar">🤖</div>
+            <div class="chat-title">Google Edu 챗봇</div>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="welcome-message">
+                안녕하세요! Google for Education에 대해 궁금한 점이 있으시면 무엇이든 질문해주세요.
+                <div class="quick-questions">
+                    <div class="quick-question" onclick="sendQuickQuestion('Google 인증교육자란 무엇인가요?')">Google 인증교육자란?</div>
+                    <div class="quick-question" onclick="sendQuickQuestion('인증 시험은 어떻게 신청하나요?')">시험 신청 방법</div>
+                    <div class="quick-question" onclick="sendQuickQuestion('Level 1과 Level 2의 차이점은?')">Level 차이점</div>
+                    <div class="quick-question" onclick="sendQuickQuestion('시험 준비는 어떻게 하나요?')">시험 준비</div>
+                </div>
+            </div>
+            
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="message-avatar">🤖</div>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chat-input">
+            <div class="input-container">
+                <input type="text" id="messageInput" class="message-input" placeholder="질문을 입력하세요..." />
+                <button id="sendButton" class="send-button">전송</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // FAQ 데이터 (실제로는 data/faq.json에서 로드됩니다)
+        const faqData = {
+            "questions": [
+                {
+                    "keywords": ["구글 인증교육자", "google 인증교육자", "인증교육자란", "google certified educator"],
+                    "answer": "Google 인증교육자(Google Certified Educator)는 Google for Education 도구들을 효과적으로 활용할 수 있는 능력을 인증받은 교육자입니다. Level 1과 Level 2로 나뉘며, 각각 다른 수준의 Google 도구 활용 능력을 평가합니다."
+                },
+                {
+                    "keywords": ["시험 신청", "신청 방법", "어떻게 신청"],
+                    "answer": "Google 인증교육자 시험은 온라인으로 신청할 수 있습니다. \n1. Google for Education 웹사이트 방문\n2. 'Training & Certification' 메뉴 선택\n3. 원하는 레벨(Level 1 또는 Level 2) 선택\n4. 시험 일정 및 결제 진행\n\n시험 비용은 Level 1이 $10, Level 2가 $25입니다."
+                },
+                {
+                    "keywords": ["level 1", "level 2", "차이점", "레벨 차이"],
+                    "answer": "Level 1과 Level 2의 주요 차이점:\n\n**Level 1:**\n- Google 도구의 기본적인 활용 능력\n- 수업에서의 기초적인 기술 통합\n- 시험 시간: 3시간\n- 비용: $10\n\n**Level 2:**\n- 고급 기능 및 복합적인 도구 활용\n- 혁신적인 교육 방법론 적용\n- 시험 시간: 3시간\n- 비용: $25\n- Level 1 취득 후 응시 가능"
+                },
+                {
+                    "keywords": ["시험 준비", "준비 방법", "공부", "학습"],
+                    "answer": "시험 준비 방법:\n\n1. **Google for Education Training Center** 활용\n   - 무료 온라인 학습 과정 수강\n   - 실습 중심의 학습 진행\n\n2. **실제 도구 사용 경험**\n   - Google Classroom, Drive, Docs 등 직접 활용\n   - 교육 현장에서의 실제 적용 경험\n\n3. **연습 시험**\n   - 샘플 문제를 통한 시험 형식 익히기\n   - 시간 관리 연습\n\n4. **커뮤니티 참여**\n   - Google Educator Groups 참여\n   - 동료 교육자들과의 경험 공유"
+                },
+                {
+                    "keywords": ["유효기간", "만료", "갱신"],
+                    "answer": "Google 인증교육자 자격증의 유효기간은 **3년**입니다. 만료 전에 재시험을 통해 갱신할 수 있으며, 갱신 시에도 동일한 시험 절차와 비용이 적용됩니다."
+                },
+                {
+                    "keywords": ["혜택", "장점", "이점"],
+                    "answer": "Google 인증교육자가 되면 얻는 혜택:\n\n1. **공식 인증서 및 디지털 배지**\n2. **Google Certified Educator 커뮤니티 참여**\n3. **우선적인 Google 교육 프로그램 참여 기회**\n4. **교육자로서의 전문성 인정**\n5. **학교나 기관에서의 경쟁력 향상**\n6. **Google 교육 도구 활용 능력 증명**"
+                }
+            ]
+        };
+
+        const chatMessages = document.getElementById('chatMessages');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        function addMessage(content, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${isUser ? '👤' : '🤖'}</div>
+                <div class="message-content">${content}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            typingIndicator.style.display = 'flex';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTyping() {
+            typingIndicator.style.display = 'none';
+        }
+
+        function findAnswer(question) {
+            const lowerQuestion = question.toLowerCase();
+            
+            for (const item of faqData.questions) {
+                for (const keyword of item.keywords) {
+                    if (lowerQuestion.includes(keyword.toLowerCase())) {
+                        return item.answer;
+                    }
+                }
+            }
+            
+            return "죄송합니다. 해당 질문에 대한 정보를 찾을 수 없습니다. Google for Education 관련 다른 질문을 해주시거나, 더 구체적으로 질문해 주세요. 예를 들어:\n\n• Google 인증교육자 시험 신청 방법\n• Level 1과 Level 2의 차이점\n• 시험 준비 방법\n• 인증서 유효기간\n\n등에 대해 질문해 주세요.";
+        }
+
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message) return;
+
+            // 사용자 메시지 추가
+            addMessage(message, true);
+            messageInput.value = '';
+            sendButton.disabled = true;
+
+            // 타이핑 표시
+            showTyping();
+
+            // 답변 생성 (실제로는 지연 시뮬레이션)
+            setTimeout(() => {
+                hideTyping();
+                const answer = findAnswer(message);
+                addMessage(answer.replace(/\n/g, '<br>'));
+                sendButton.disabled = false;
+                messageInput.focus();
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function sendQuickQuestion(question) {
+            messageInput.value = question;
+            sendMessage();
+        }
+
+        // 이벤트 리스너
+        sendButton.addEventListener('click', sendMessage);
+        
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        messageInput.addEventListener('input', () => {
+            sendButton.disabled = !messageInput.value.trim();
+        });
+
+        // 초기 포커스
+        messageInput.focus();
+    </script>
+</body>
+</html>
