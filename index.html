@@ -286,7 +286,7 @@
         // FAQ 데이터 로드 함수
         async function loadFAQData() {
             try {
-                const response = await fetch('data/faq.json');
+                const response = await fetch('faq.json');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
