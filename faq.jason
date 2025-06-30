@@ -1,0 +1,240 @@
+{
+  "google_for_education_faq": {
+    "certification_programs": {
+      "educator_level_1_2": {
+        "description": "기초 및 고급 교육 과정을 포함한 등급 1 및 등급 2 인증 시험",
+        "requirements": {
+          "level_1": {
+            "cost": "$10",
+            "duration": "2-3시간",
+            "description": "교육 현장에서 Google 도구를 사용하여 교수법과 학습 과정을 개선할 수 있는 역량 평가"
+          },
+          "level_2": {
+            "cost": "$25", 
+            "duration": "약 3시간",
+            "description": "다양한 Google for Education 도구 및 기술을 교실 환경에 통합할 수 있는 최신 전략 이해도 평가"
+          }
+        },
+        "exam_development": {
+          "process": [
+            "목표 도메인 정의 - SME(주제 전문가) 직무 피드백 기반",
+            "청사진 - 각 목표의 비중 결정",
+            "문항 개발 - SME가 시험 목표 및 청사진 기반으로 개발",
+            "기술 검토 - 기술 정확성 검토",
+            "베타 테스트 - 문항 성적 평가",
+            "문항 선택 및 커트라인 설정",
+            "게시 - 전 세계 온라인 시험 제공"
+          ]
+        },
+        "technical_requirements": {
+          "browser": "최신 버전의 Chrome 브라우저 필요",
+          "webcam": "감독을 위한 웹캠 필요 (특별한 웹캠 불필요, 조명 적절하면 됨)",
+          "photo_verification": "시험 시작 전 본인 사진과 신분증 사진 촬영 필요"
+        },
+        "results_and_certificates": {
+          "result_delivery": "시험 완료 후 영업일 기준 3일 이내",
+          "email_from": "gfe-certifications@google.com",
+          "certificate_validity": "36개월",
+          "reexamination_schedule": {
+            "first_fail": "3일 후 재응시 가능",
+            "second_fail": "7일 후 재응시 가능", 
+            "third_fail": "14일 후 재응시 가능",
+            "fourth_fail": "30일 후 계정 재설정 후 재응시 가능"
+          }
+        },
+        "accessibility": "의학적 사유로 추가 지원이 필요한 응시자에게 추가 시험 시간 부여 가능",
+        "language_limitation": "인증서는 시험이 완료된 기본 언어로만 발급"
+      },
+      "certified_trainer": {
+        "requirements": [
+          {
+            "step": 1,
+            "name": "공인 트레이너 교육 과정",
+            "duration": "약 8시간",
+            "description": "진취적이고 효율적인 교육 계획 수립 및 이행, 교육 전문가의 혁신적인 Google 기술 사용 지원"
+          },
+          {
+            "step": 2,
+            "name": "트레이너 역량 평가",
+            "cost": "$15",
+            "duration": "약 1시간",
+            "description": "트레이너 교육 과정 내용 및 Google for Education 숙지도 평가"
+          },
+          {
+            "step": 3,
+            "name": "Google 공인 교육 전문가 등급 1",
+            "cost": "$10",
+            "duration": "2-3시간"
+          },
+          {
+            "step": 4,
+            "name": "Google 공인 교육 전문가 등급 2", 
+            "cost": "$25",
+            "duration": "약 3시간"
+          },
+          {
+            "step": 5,
+            "name": "트레이너 동영상",
+            "requirements": {
+              "duration": "2-3분 (3분 초과 시 지원 신청 거부)",
+              "content": "Google Workspace for Education 제품, Chromebook 또는 Chrome 혁신적 사용법",
+              "format": "스크린캐스트 권장",
+              "criteria": [
+                "쉽게 따라할 수 있는 안내/단계",
+                "교실 또는 학교 현장에서의 혁신적 사용법 시연"
+              ]
+            }
+          },
+          {
+            "step": 6,
+            "name": "전문성 개발 경험",
+            "description": "지난해 주도한 Google 관련 전문성 학습 기회 3-5가지 소개 (팟캐스트, 블로그, 교육 자료, 온라인 과정, 교육 세션 등)"
+          },
+          {
+            "step": 7,
+            "name": "지원서 제출",
+            "duration": "약 1시간",
+            "description": "위 자료 첨부하여 멤버십 지원서 제출 및 짧은 질문 답변"
+          }
+        ],
+        "application_process": {
+          "review_cycle": "매달 순차적 검토, 매달 마지막 수요일 마감",
+          "notification_time": "접수 후 4-6주 정도"
+        },
+        "recertification": {
+          "requirements": [
+            "활동 앱에서 최소 10개의 Google 중심 교육 세션 보고",
+            "2024년 제품 업데이트 시험 통과",
+            "레벨 1 및 레벨 2의 유효한 인증서 보유 (3년마다 갱신)"
+          ]
+        },
+        "contact_email": "gfe-trainer-program@google.com",
+        "proper_title": "Google for Education 공인 트레이너"
+      },
+      "certified_innovator": {
+        "application_process": "혁신가 아카데미 참석 신청 필요",
+        "prerequisites": "Google 공인 교육 전문가 등급 2 시험 통과 필요",
+        "activities": [
+          "영향력이 높은 혁신 프로젝트 선택하여 계속 작업",
+          "교육 혁신을 위해 Google 기술을 사용하는 영향력 있는 전도사",
+          "학교 및 학교 시스템의 혁신 및 변화를 추구하는 Google 프로그램 이끌기"
+        ],
+        "cost": {
+          "program": "무료 전문성 개발 기회",
+          "travel": "참가자 자비 부담 (왕복 교통 및 숙박 비용)",
+          "scholarship": "장학금을 통한 지원 가능"
+        },
+        "group_size_limitation": [
+          "고품질 경험 보장",
+          "커뮤니티 구축 지원",
+          "공간 제약"
+        ]
+      },
+      "champions": {
+        "automatic_membership": [
+          "Google for Education 공인 혁신가",
+          "Google for Education 인증 트레이너", 
+          "Google for Education 인증 코치"
+        ],
+        "direct_application": "불가능 - 먼저 위 인증 중 하나 이상 취득 필요",
+        "geg_leader_requirement": "2024년부터 GEG 리더는 챔피언 자격 (코치, 트레이너 또는 혁신가 인증) 보유 필요",
+        "program_continuation": "혁신가, 트레이너, 코치 프로그램 계속 운영되며 신규 회원 모집 지속",
+        "community_hub": "향후 몇 달 내 챔피언 전용 커뮤니티 허브 출시 예정"
+      }
+    },
+    "symposiums": {
+      "2023_schedule": [
+        {
+          "location": "싱가포르",
+          "dates": "9월 11일 월요일~9월 13일 수요일"
+        },
+        {
+          "location": "서니베일",
+          "dates": "10월 1일 일요일~10월 3일 화요일"
+        },
+        {
+          "location": "상파울루",
+          "dates": "10월 18일 수요일~10월 20일 금요일",
+          "language": "포르투갈어"
+        },
+        {
+          "location": "멕시코시티", 
+          "dates": "10월 25일 수요일~10월 27일 금요일",
+          "language": "스페인어"
+        },
+        {
+          "location": "더블린",
+          "dates": "11월 7일 화요일~11월 9일 목요일"
+        },
+        {
+          "location": "시드니",
+          "dates": "12월 6일 수요일~12월 8일 금요일"
+        }
+      ],
+      "2024_schedule": [
+        {
+          "location": "도쿄",
+          "dates": "2024년 3월 26일 화요일~3월 28일 목요일",
+          "language": "일본어"
+        }
+      ],
+      "eligibility": "현재 인증 혁신가, 트레이너 또는 코치만 신청 가능",
+      "language": "대부분 영어로 진행 (예외: 상파울루-포르투갈어, 멕시코시티-스페인어, 도쿄-일본어)",
+      "selection_criteria": [
+        "커뮤니티 전체의 골고루 대표",
+        "다양한 정체성, 조직 유형, 지역 고려",
+        "긍정적이고 열정적이며 적극적인 커뮤니티 회원",
+        "학생과 교육자, 교육의 미래를 위해 노력하는 참석자"
+      ],
+      "frequency": "2-3년에 한 번 개최 예정",
+      "cost": "여행 경비 참석자 자비 부담, 이벤트 및 현장 식사는 Google 제공",
+      "contact": "info@gfechampions.com"
+    },
+    "program_updates_2024": {
+      "innovator": {
+        "changes": "변경사항 없음",
+        "activities": [
+          "영향력이 큰 혁신 프로젝트 계속 진행",
+          "교육 혁신을 위한 Google 기술 사용 알리는 역할",
+          "Google 프로그램이 학교 및 학교 시스템의 혁신과 변화 유도하도록 이끌기"
+        ]
+      },
+      "trainer": {
+        "changes": "부분적 업데이트",
+        "requirements": [
+          "유효한 L1/L2 인증 보유 (3년마다 갱신)",
+          "연간 제품 업데이트 평가 참여", 
+          "매년 10개의 교육 제출 (기존 12개에서 감소)"
+        ]
+      },
+      "coach": {
+        "changes": "부분적 업데이트",
+        "requirements": [
+          "유효한 L1/L2 인증 보유 (3년마다 갱신)",
+          "매년 50시간의 1:1 코칭 활동 (현재 100시간에서 감소)"
+        ]
+      }
+    },
+    "professional_development_partners": {
+      "support_role": "각 하위 프로그램(트레이너, 혁신가, 코치)의 절차와 요구사항 이해를 통해 챔피언이 되고자 하는 교육자 지원",
+      "recommendations": "직원과 트레이너가 Google for Education 인증 트레이너가 되도록 신청 권장",
+      "updates": "NDA 체결 파트너를 위한 분기별 회의를 통해 시험 최신 정보 제공"
+    },
+    "bulk_voucher_program": {
+      "provider": "Kryterion",
+      "purchase_link": "https://www.kryteriononline.com/google-edu-bulk-voucher-program",
+      "pricing": {
+        "level_1": "$10",
+        "level_2": "$25", 
+        "trainer_assessment": "$15"
+      }
+    },
+    "support_contacts": {
+      "certification_support": "https://support.google.com/a/contact/certification",
+      "trainer_program": "gfe-trainer-program@google.com",
+      "champions_info": "info@gfechampions.com",
+      "grants_contact": "grants@eresources.com",
+      "certification_results": "gfe-certifications@google.com"
+    }
+  }
+}
