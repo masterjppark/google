@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const messagesContainer = document.getElementById('chatbot-messages');
 
     // 1. 시작 시 챗봇 소개 메시지 추가
-    // DOMContentLoaded 이벤트가 발생했을 때 초기 메시지를 추가
+    // 웹 페이지가 로드되면 챗봇이 자동으로 첫 인사말을 보냅니다.
     addMessage('안녕하세요! 저는 Google 공인 교육자 제도에 대해 궁금한 점을 알려주는 챗봇입니다.', 'bot');
 
     // --- 챗봇 답변 데이터 ---
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             keywords: ["너는 누구니", "넌 누구야", "자기소개", "누구세요", "정체", "이름"],
             answer: "저는 Google 공인 교육자 제도에 대해 궁금한 점을 알려주는 챗봇입니다."
         },
-        // 4. 용어 수정 (구글 공인 교육자 L1, L2) 반영 및 기존 Q&A 강화
+        // 4. 용어 수정 (Google 공인 교육자 L1, L2) 반영 및 기존 Q&A 강화
         {
             keywords: ["google 공인 교육자 l1 시험 비용", "공인 교육자 l1 비용", "l1 가격", "l1 얼마", "l1 응시료", "l1 시험료"],
             answer: "Google 공인 교육자 L1 시험은 10달러입니다."
