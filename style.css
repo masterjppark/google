@@ -1,32 +1,75 @@
 body {
-  font-family: 'Noto Sans KR', sans-serif;
-  background: #f0f4fa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* 뷰포트 높이의 최소 100%를 차지 */
+    margin: 0;
+    background-color: #f0f2f5; /* 연한 회색 배경 */
+    color: #333; /* 기본 텍스트 색상 */
 }
-.chat-container {
-  background: white;
-  width: 400px;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+
+.chatbot-container {
+    background-color: #fff; /* 컨테이너 배경색 흰색 */
+    border-radius: 15px; /* 둥근 모서리 */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
+    width: 90%; /* 화면 너비의 90% 차지 */
+    max-width: 400px; /* 최대 너비 제한 (반응형 디자인) */
+    display: flex;
+    flex-direction: column; /* 자식 요소를 세로로 배열 */
+    overflow: hidden; /* 컨테이너를 넘어가는 내용 숨김 */
 }
-.bot-avatar {
-  width: 80px;
-  display: block;
-  margin: 0 auto 10px;
+
+.chatbot-header {
+    background-color: #4285F4; /* Google Blue */
+    color: white; /* 헤더 텍스트 색상 */
+    padding: 15px 20px;
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* 헤더 아래 그림자 */
 }
-#chat-box {
-  height: 300px;
-  overflow-y: auto;
-  margin-bottom: 10px;
+
+.chatbot-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* 원형 아바타 */
+    margin-right: 10px;
+    background-color: #fff; /* 아바타 배경색 (흰색 테두리 효과) */
+    padding: 2px; /* 아바타 주변 여백 */
 }
-#user-input {
-  width: 75%;
-  padding: 10px;
+
+.chatbot-header h1 {
+    margin: 0;
+    font-size: 1.2em; /* 헤더 폰트 크기 */
 }
-button {
-  padding: 10px;
+
+.chatbot-messages {
+    flex-grow: 1; /* 남은 공간을 채우도록 성장 */
+    padding: 20px;
+    overflow-y: auto; /* 내용이 넘칠 경우 세로 스크롤바 생성 */
+    max-height: 500px; /* 대화창 최대 높이 */
+    display: flex;
+    flex-direction: column; /* 메시지를 세로로 배열 */
+    gap: 10px; /* 메시지 간 간격 */
+    background-color: #f9f9f9; /* 메시지 배경색 */
 }
+
+.message {
+    max-width: 80%; /* 메시지 최대 너비 */
+    padding: 10px 15px;
+    border-radius: 18px; /* 둥근 메시지 버블 */
+    word-wrap: break-word; /* 긴 단어 자동 줄바꿈 */
+    font-size: 0.95em;
+    line-height: 1.4;
+}
+
+.user-message {
+    align-self: flex-end; /* 사용자 메시지는 오른쪽 정렬 */
+    background-color: #e2f0ff; /* 연한 Google Blue */
+    color: #333;
+    border-bottom-right-radius: 5px; /* 오른쪽 아래 모서리만 덜 둥글게 */
+}
+
+.bot
