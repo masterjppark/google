@@ -7,6 +7,7 @@ window.onload = () => {
     "bot-message"
   );
 
+  // FAQ 데이터 불러오기
   fetch('data/faq.json')
     .then(res => res.json())
     .then(data => faqData = data)
