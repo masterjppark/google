@@ -85,6 +85,8 @@
         }
 
         .message-content {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
             max-width: 80%;
             padding: 12px 16px;
             border-radius: 18px;
@@ -92,12 +94,16 @@
         }
 
         .message.bot .message-content {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
             background: #4285f4;
             color: white;
             border-bottom-left-radius: 6px;
         }
 
         .message.user .message-content {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
             background: #e5e7eb;
             color: #374151;
             border-bottom-right-radius: 6px;
@@ -286,11 +292,21 @@
         // FAQ 데이터 로드 함수
         async function loadFAQData() {
             try {
-                const response = await fetch('/faq.jason');
+                const response = await fetch('./faq.json');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                faqData = await response.json();
+                const rawData = await response.json();
+                const categories = rawData.faq?.categories;
+                if (!Array.isArray(categories)) {
+                    throw new Error('FAQ 데이터 구조가 올바르지 않습니다.');
+                }
+                const questions = categories.flatMap(category => category.questions || []);
+                if (!questions.length) throw new Error('FAQ 질문이 없습니다.');
+                faqData = {
+                    questions: questions,
+                    quick_questions: categories.map(category => category.questions?.[0]?.question).filter(Boolean)
+                };
                 initializeChat();
             } catch (error) {
                 console.error('FAQ 데이터 로드 실패:', error);
@@ -317,22 +333,20 @@
             welcomeDiv.className = 'welcome-message';
             
             // 빠른 질문 버튼들을 동적으로 생성
-            let quickQuestions = '';
-            if (faqData && faqData.quick_questions) {
-                quickQuestions = '<div class="quick-questions">';
-                faqData.quick_questions.forEach(q => {
-                    quickQuestions += `<div class="quick-question" onclick="sendQuickQuestion('${q}')">${q}</div>`;
-                });
-                quickQuestions += '</div>';
-            }
-            
-            welcomeDiv.innerHTML = `
-                안녕하세요! Google for Education에 대해 궁금한 점이 있으시면 무엇이든 질문해주세요.
-                ${quickQuestions}
-            `;
-            
+            welcomeDiv.textContent = '안녕하세요! Google for Education에 대해 궁금한 점을 질문해 주세요.';
+            const quickContainer = document.createElement('div');
+            quickContainer.className = 'quick-questions';
+            faqData.quick_questions.forEach(question => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'quick-question';
+                button.textContent = question;
+                button.addEventListener('click', () => sendQuickQuestion(question));
+                quickContainer.appendChild(button);
+            });
+            welcomeDiv.appendChild(quickContainer);
             chatMessages.appendChild(welcomeDiv);
-            
+
             // 입력 필드 활성화
             messageInput.disabled = false;
             sendButton.disabled = false;
@@ -345,9 +359,10 @@
             
             messageDiv.innerHTML = `
                 <div class="message-avatar">${isUser ? '👤' : '🤖'}</div>
-                <div class="message-content">${content}</div>
+                <div class="message-content"></div>
             `;
             
+            messageDiv.querySelector('.message-content').textContent = content;
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
@@ -362,32 +377,38 @@
         }
 
         function findAnswer(question) {
-            if (!faqData || !faqData.questions) {
-                return "죄송합니다. 데이터를 불러오지 못했습니다.";
-            }
-
-            const lowerQuestion = question.toLowerCase();
-            
+            if (!faqData?.questions?.length) return 'FAQ 데이터를 불러오지 못했습니다.';
+            const normalize = text => String(text).toLowerCase().replace(/[^가-힣a-z0-9]/g, '');
+            const query = normalize(question);
+            if (!query) return '질문을 조금 더 구체적으로 입력해 주세요.';
+            const exact = faqData.questions.find(item => normalize(item.question) === query);
+            if (exact) return exact.answer;
+            const words = question.toLowerCase().split(/\s+/).map(normalize).filter(word => word.length >= 2);
+            let best = null;
+            let bestScore = 0;
             for (const item of faqData.questions) {
-                for (const keyword of item.keywords) {
-                    if (lowerQuestion.includes(keyword.toLowerCase())) {
-                        return item.answer;
-                    }
+                const title = normalize(item.question);
+                const tags = (item.tags || []).map(normalize);
+                let score = title.includes(query) ? 8 : 0;
+                for (const tag of tags) {
+                    if (tag && (query.includes(tag) || (query.length >= 2 && tag.includes(query)))) score += 4;
                 }
+                for (const word of words) {
+                    if (title.includes(word)) score += 1;
+                }
+                if (score > bestScore) { best = item; bestScore = score; }
             }
-            
-            // 기본 응답 메시지 (JSON에서 정의할 수 있음)
-            return faqData.default_message || 
-                "죄송합니다. 해당 질문에 대한 정보를 찾을 수 없습니다. Google for Education 관련 다른 질문을 해주시거나, 더 구체적으로 질문해 주세요.";
+            return best ? best.answer : '관련 답변을 찾지 못했습니다. 위의 질문 버튼을 이용하거나, 비용·시험준비·유효기간처럼 구체적인 단어로 질문해 주세요.';
         }
 
         function sendMessage() {
             const message = messageInput.value.trim();
-            if (!message || !faqData) return;
+            if (!message || !faqData || messageInput.disabled) return;
 
             // 사용자 메시지 추가
             addMessage(message, true);
             messageInput.value = '';
+            messageInput.disabled = true;
             sendButton.disabled = true;
 
             // 타이핑 표시
@@ -397,8 +418,9 @@
             setTimeout(() => {
                 hideTyping();
                 const answer = findAnswer(message);
-                addMessage(answer.replace(/\n/g, '<br>'));
-                sendButton.disabled = false;
+                addMessage(answer);
+                messageInput.disabled = false;
+                sendButton.disabled = !messageInput.value.trim();
                 messageInput.focus();
             }, 1000 + Math.random() * 1000);
         }
@@ -412,7 +434,7 @@
         sendButton.addEventListener('click', sendMessage);
         
         messageInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !messageInput.disabled) {
+            if (e.key === 'Enter' && !e.isComposing && !messageInput.disabled) {
                 sendMessage();
             }
         });
